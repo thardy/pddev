@@ -1,0 +1,128 @@
+#ignore npm modules
+node_modules/
+
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+*.obj
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.dbmdl
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+license.config
+src/web/.idea/
+src/commerce/App_Data/
+src/web/App_Data/
+.idea/
+dist/
+node_modules/
+postgrator.json
+config.json
+
+# ImageResize.NET Disk Cache, we need the config file, but not the cached images
+!src/web/App_Data/diskcache/Web.config
+
+# NuGet Packages Directory is not committed
+packages/*
+
+# But the config is - with default VS settings, this will download missing packages
+!packages/repositories.config
+
+# Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
+!packages/build/
+
+
+# Ignore everything but the readme from the database folder
+# We do not distribute the databases
+!db/*
+!db/readme.md
+PremierDesigns.sln.ide/
+.vs/*
+!db/backups/**
+/src/Presentation/PremierDesigns.Web/App_Data
+/epiCMSDatabase/*.dbmdl
+# Client code ignores
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+/epiCMSDatabase/*.jfm
+# compiled output
+dist/
+tmp/
+# dependencies
+node_modules/
+bower_components/
+# IDEs and editors
+.idea/
+.vscode/
+.project
+.classpath
+*.launch
+.settings/
+# misc
+.sass-cache/
+connect.lock/
+coverage/*
+/libpeerconnection.log
+npm-debug.log
+testem.log
+typings/
+
+# e2e
+e2e/*.js
+e2e/*.map
+
+#System Files
+.DS_Store
+Thumbs.db
+
+#Ignore Epi CMS blobs
+/src/Presentation/PremierDesigns.Web/App_Data/blobs
+/pdiStagingDatabase/pdiStagingDatabase.jfm
+/pdiStagingDatabase/pdiStagingDatabase.dbmdl
+/epiCommerceDatabase/epiCommerceDatabase.jfm
+
+
+
+portal
+*.jfm
+/src/Databases/epiCMSDatabase/epiCMSDatabase.jfm
+epiCommerceDatabase.jfm
+/src/Databases/epiCMSDatabase/*.jfm
+/src/Databases/epiCommerceDatabase/*.jfm
+
+/epiCommerceDatabase/epiCommerceDatabase.dbmdl
+*.dbmdl
+/src/Databases/epiCMSDatabase/*.jfm
+/src/Databases/epiCommerceDatabase/*.jfm
+/src/Databases/pdiStagingDatabase/*.jfm
+*.map
+*.ncrunchproject
+*.ncrunchsolution
+/src/Presentation/PremierDesigns.Web/Content/jewelerapplication
+/src/Presentation/PremierDesigns.Web/Content/hub
+
+#Ignore Code Coverage Results
+CodeCoverage/CodeCoverageResults/*.svg
+CodeCoverage/CodeCoverageResults/*.htm
+CodeCoverage/CodeCoverageResults/*.js
+CodeCoverage/CodeCoverageResults/*.css
+src/Presentation/PremierDesigns.Web/License.old
