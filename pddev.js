@@ -6,7 +6,8 @@ const args = require('args');
 //  this app from an npm package (assuming we make one), that part will be taken care of for you.
 args
   .option('databaseName', 'The database you want to act on')
-  .command('migrate', 'Migrate database using scripts in local sql folder', ['m'])
+  .command('migratedb', 'Migrate database using scripts in local sql folder', ['m'])
+  .command('nukedb', 'Nuke database (drop, then create empty)', ['n'])
   .command('rebuilddb', 'Rebuild your database (drop, create, migrate)', ['r'])
   .command('restoredb', 'Restore database from bak file', ['s'])
   .command('test', 'Test cool new console stuffs', ['t']);

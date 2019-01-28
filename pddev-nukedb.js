@@ -20,10 +20,6 @@ args.option('databaseName', 'The database you want to act on');
   let dbPool = {};
 
   try {
-    // this was working, but could not set request timeout
-    // const sqlMasterConnectionOptions = {
-    //   connectionString: `Driver=SQL Server;Server=(local);Database=master;Trusted_Connection=true;`,
-    // };
     const sqlMasterConnectionOptions = {
       driver: 'msnodesqlv8',
       server: '(local)',
@@ -79,9 +75,6 @@ args.option('databaseName', 'The database you want to act on');
 
     console.log(`${options.databaseName} dropped and created - DONE`);
     dbPool.close();
-
-    console.log(`migrating sql in local sql folder...`);
-    sqlMigrationService.migrateSql();
   }
   catch (err) {
     console.log(err);
@@ -94,7 +87,5 @@ args.option('databaseName', 'The database you want to act on');
       dbPool.close();
     }
   }
-
-  //process.exit(0);
 
 })();

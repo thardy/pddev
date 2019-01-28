@@ -1,11 +1,12 @@
 {
-  "name": "devtools",
-  "version": "1.0.0",
-  "description": "Stuff developers need to run on their local machines",
+  "name": "pddev",
+  "version": "1.0.1",
+  "description": "Helpful console utilities for developers to use on their local machines",
   "main": "pddev.js",
   "bin": {
     "pddev": "pddev.js",
-    "pddev-migrate": "pddev-migrate.js",
+    "pddev-migratedb": "pddev-migratedb.js",
+    "pddev-nukedb": "pddev-nukedb.js",
     "pddev-rebuilddb": "pddev-rebuilddb.js",
     "pddev-restoredb": "pddev-restoredb.js",
     "pddev-test": "pddev-test.js"
@@ -15,6 +16,10 @@
   },
   "author": "Tim Hardy",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/premierdesigns/pddev"
+  },
   "dependencies": {
     "args": "^5.0.0",
     "fs-extra": "^7.0.1",
