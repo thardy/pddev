@@ -1,0 +1,25 @@
+{
+  "name": "devtools",
+  "version": "1.0.0",
+  "description": "Stuff developers need to run on their local machines",
+  "main": "pddev.js",
+  "bin": {
+    "pddev": "pddev.js",
+    "pddev-migrate": "pddev-migrate.js",
+    "pddev-rebuilddb": "pddev-rebuilddb.js",
+    "pddev-restoredb": "pddev-restoredb.js",
+    "pddev-test": "pddev-test.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tim Hardy",
+  "license": "ISC",
+  "dependencies": {
+    "args": "^5.0.0",
+    "fs-extra": "^7.0.1",
+    "glob": "^7.1.3",
+    "msnodesqlv8": "^0.6.12",
+    "mssql": "^4.3.0"
+  }
+}

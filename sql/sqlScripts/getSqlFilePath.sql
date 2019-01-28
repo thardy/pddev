@@ -1,0 +1,1 @@
+select convert(sysname, serverproperty('InstanceDEfaultDataPath')) as sqlFilePath
