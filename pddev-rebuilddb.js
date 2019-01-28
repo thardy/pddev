@@ -20,18 +20,18 @@ args.option('databaseName', 'The database you want to act on');
   let dbPool = {};
 
   try {
-    // this was working, but could not set request timeout
-    // const sqlMasterConnectionOptions = {
-    //   connectionString: `Driver=SQL Server;Server=(local);Database=master;Trusted_Connection=true;`,
-    // };
     const sqlMasterConnectionOptions = {
-      driver: 'msnodesqlv8',
-      server: '(local)',
-      database: 'master',
-      options: {
-        trustedConnection: true
-      }
+      connectionString: `Driver=SQL Server;Server=(local);Database=master;Trusted_Connection=true;`,
     };
+    // this wasn't working on all machines
+    // const sqlMasterConnectionOptions = {
+    //   driver: 'msnodesqlv8',
+    //   server: '(local)',
+    //   database: 'master',
+    //   options: {
+    //     trustedConnection: true
+    //   }
+    // };
     const sqlDbConnectionOptions = {
       connectionString: `Driver=SQL Server;Server=(local);Database=${options.databaseName};Trusted_Connection=true;`,
     };
@@ -87,10 +87,10 @@ args.option('databaseName', 'The database you want to act on');
     console.log(err);
   }
   finally {
-    if (masterPool) {
+    if (masterPool && masterPool.close) {
       masterPool.close();
     }
-    if (dbPool) {
+    if (dbPool && dbPool.close) {
       dbPool.close();
     }
   }

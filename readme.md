@@ -65,9 +65,9 @@ Equivalent to...
 pddev s -d databaseName
 ```
 
-****** The following also require a postgrator.json file where the commands are invoked, in addition to a sql folder ******
+****** The following also require a postgrator.json file where the commands are invoked - our convention is at the root of the repo, in addition to a sql folder ******
 
-Create the following file.  The convention is that each repo has one database it is responsible for.  That database is configured 
+Create the following file - postgrator.json.  The convention is that each repo has one database it is responsible for.  That database is configured 
 for migrations here.  We are using postgrator - https://github.com/rickbergfalk/postgrator and postgrator-cli - https://github.com/MattiLehtinen/postgrator-cli for migrations.
 ```json
 {
@@ -103,5 +103,5 @@ pddev-rebuilddb -d databaseName
 ```
 Equivalent to... 
 ```
-pddev r
+pddev r -d databaseName
 ```

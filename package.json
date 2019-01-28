@@ -1,6 +1,6 @@
 {
   "name": "pddev",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Helpful console utilities for developers to use on their local machines",
   "main": "pddev.js",
   "bin": {
