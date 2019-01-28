@@ -1,6 +1,7 @@
 const glob = require('glob');
 const path = require('path');
 const fs = require("fs-extra");
+const sql = require('mssql/msnodesqlv8');
 
 class SqlService {
   constructor() {
@@ -104,6 +105,48 @@ class SqlService {
       transformedTemplate = transformedTemplate.replace(regex, data[key]);
     }
     return transformedTemplate;
+  }
+
+  async nukeDb(masterPool, sqlDbConnectionOptions, data) {
+    // **** drop database
+    let result = await this.runScript(
+        masterPool,
+        this.scriptNames.dropDatabase,
+        `attempting to drop database ${data.databaseName}...`,
+        {databaseName: data.databaseName});
+
+    // **** create database
+    result = await this.runScript(
+        masterPool,
+        this.scriptNames.createDatabase,
+        `creating database ${data.databaseName}...`,
+        {databaseName: data.databaseName});
+
+    // **** create local user if not exists
+    result = await this.runScript(
+        masterPool,
+        this.scriptNames.createLocalUserIfNotExists,
+        `ensuring localuser exists...`,
+        {
+          username: data.username, password: data.password
+        });
+
+    // **** initialize security
+    let dbPool = await new sql.ConnectionPool(sqlDbConnectionOptions).connect();
+    console.log(`connected to ${data.databaseName}...`);
+
+    result = await this.runScript(
+        dbPool,
+        this.scriptNames.initSecurityForLocalUser,
+        `initializing security for localuser on database ${data.databaseName}...`,
+        {
+          databaseName: data.databaseName,
+          username: data.username,
+          password: data.password,
+        });
+
+    console.log(`${data.databaseName} dropped and created - DONE`);
+    dbPool.close();
   }
 }
 

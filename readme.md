@@ -8,6 +8,11 @@ Globally install pddev from npm...
 npm install -g pddev
 ```
 
+Globally install the following support packages from npm...
+```
+npm install -g postgrator, postgrator-cli, mssql
+```
+
 Create a config.json file wherever your pddev got installed globally -   
 usually C:\users\\&lt;username&gt;\AppData\Roaming\npm\node_modules\pddev
 
@@ -56,7 +61,7 @@ pddev n -d databaseName
 ****** The following require a sql folder relative to where the commands are invoked ******
 
 ### RestoreDb
-Restore will look for ./sql/restore.bak relative to where the command is invoked.  It will restore the restore.bak into the named database.   The name provided must match the name in the restore.bak file.
+Restore will perform a nuke, then it will look for ./sql/restore.bak relative to where the command is invoked.  It will restore the restore.bak into the named database.   The databaseName provided must match the filenames in the restore.bak file.
 ```
 pddev-restoredb -d databaseName
 ```

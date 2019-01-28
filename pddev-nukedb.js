@@ -39,46 +39,7 @@ args.option('databaseName', 'The database you want to act on');
     masterPool = await new sql.ConnectionPool(sqlMasterConnectionOptions).connect();
     console.log('connected to master using instance ${c}...');
 
-    // **** drop database
-    let result = await sqlService.runScript(
-        masterPool,
-        sqlService.scriptNames.dropDatabase,
-        `attempting to drop database ${options.databaseName}...`,
-        {databaseName: options.databaseName});
-
-    // **** create database
-    result = await sqlService.runScript(
-        masterPool,
-        sqlService.scriptNames.createDatabase,
-        `creating database ${options.databaseName}...`,
-        {databaseName: options.databaseName});
-
-    // **** create local user if not exists
-    result = await sqlService.runScript(
-        masterPool,
-        sqlService.scriptNames.createLocalUserIfNotExists,
-        `ensuring localuser exists...`,
-        {
-          username: config.username, password: config.password
-        });
-    masterPool.close();
-
-    // **** initialize security
-    dbPool = await new sql.ConnectionPool(sqlDbConnectionOptions).connect();
-    console.log(`connected to ${options.databaseName}...`);
-
-    result = await sqlService.runScript(
-        dbPool,
-        sqlService.scriptNames.initSecurityForLocalUser,
-        `initializing security for localuser on database ${options.databaseName}...`,
-        {
-          databaseName: options.databaseName,
-          username: config.username,
-          password: config.password,
-        });
-
-    console.log(`${options.databaseName} dropped and created - DONE`);
-    dbPool.close();
+    await sqlService.nukeDb(masterPool, sqlDbConnectionOptions, {databaseName: options.databaseName, username: config.username, password: config.password});
   }
   catch (err) {
     console.log(err);

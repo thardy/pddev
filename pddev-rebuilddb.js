@@ -14,8 +14,6 @@ args.option('databaseName', 'The database you want to act on');
   // console.log(process.argv);
   const options = args.parse(process.argv);
 
-  //const sqlScripts = await sqlService.transformSqlScripts({ databaseName: options.databaseName }); //await require('./sqlScripts/sqlScriptService')({ databaseName: options.databaseName });
-
   let masterPool = {};
   let dbPool = {};
 
@@ -39,46 +37,8 @@ args.option('databaseName', 'The database you want to act on');
     masterPool = await new sql.ConnectionPool(sqlMasterConnectionOptions).connect();
     console.log('connected to master...');
 
-    // **** drop database
-    let result = await sqlService.runScript(
-        masterPool,
-        sqlService.scriptNames.dropDatabase,
-        `attempting to drop database ${options.databaseName}...`,
-        {databaseName: options.databaseName});
-
-    // **** create database
-    result = await sqlService.runScript(
-        masterPool,
-        sqlService.scriptNames.createDatabase,
-        `creating database ${options.databaseName}...`,
-        {databaseName: options.databaseName});
-
-    // **** create local user if not exists
-    result = await sqlService.runScript(
-        masterPool,
-        sqlService.scriptNames.createLocalUserIfNotExists,
-        `ensuring localuser exists...`,
-        {
-          username: config.username, password: config.password
-        });
-    masterPool.close();
-
-    // **** initialize security
-    dbPool = await new sql.ConnectionPool(sqlDbConnectionOptions).connect();
-    console.log(`connected to ${options.databaseName}...`);
-
-    result = await sqlService.runScript(
-        dbPool,
-        sqlService.scriptNames.initSecurityForLocalUser,
-        `initializing security for localuser on database ${options.databaseName}...`,
-        {
-          databaseName: options.databaseName,
-          username: config.username,
-          password: config.password,
-        });
-
-    console.log(`${options.databaseName} dropped and created - DONE`);
-    dbPool.close();
+    // nuke database
+    await sqlService.nukeDb(masterPool, sqlDbConnectionOptions, {databaseName: options.databaseName, username: config.username, password: config.password});
 
     console.log(`migrating sql in local sql folder...`);
     sqlMigrationService.migrateSql();
