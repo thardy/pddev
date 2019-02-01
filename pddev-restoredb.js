@@ -8,10 +8,12 @@ const config = require('./config.json');
 args.option('databaseName', 'The database you want to act on');
 
 (async () => {
+  const postgratorConfig = await require('./postgratorConfig');
   const sqlService = new SqlService();
   const options = args.parse(process.argv);
+  const databaseName = options.databaseName ? options.databaseName : postgratorConfig.database;
 
-  //const sqlScripts = await sqlService.transformSqlScripts({ databaseName: options.databaseName }); //await require('./sqlScripts/sqlScriptService')({ databaseName: options.databaseName });
+  //const sqlScripts = await sqlService.transformSqlScripts({ databaseName: databaseName }); //await require('./sqlScripts/sqlScriptService')({ databaseName: databaseName });
 
   let masterPool = {};
 
@@ -30,7 +32,7 @@ args.option('databaseName', 'The database you want to act on');
     //   }
     // };
     const sqlDbConnectionOptions = {
-      connectionString: `Driver=SQL Server;Server=(local);Database=${options.databaseName};Trusted_Connection=true;`,
+      connectionString: `Driver=SQL Server;Server=(local);Database=${databaseName};Trusted_Connection=true;`,
     };
 
     masterPool = await new sql.ConnectionPool(sqlMasterConnectionOptions).connect();
@@ -38,17 +40,17 @@ args.option('databaseName', 'The database you want to act on');
     console.log('connected to master...');
 
     // nuke database
-    await sqlService.nukeDb(masterPool, sqlDbConnectionOptions, {databaseName: options.databaseName, username: config.username, password: config.password});
+    await sqlService.nukeDb(masterPool, sqlDbConnectionOptions, {databaseName: databaseName, username: config.username, password: config.password});
 
     // **** restore database
-    console.log(`attempting to restore database ${options.databaseName}...`);
+    console.log(`attempting to restore database ${databaseName}...`);
     //const sqlFilePathResult = await masterPool.request().query(sqlScripts.getSqlFilePath);
     const sqlFilePathResult = await sqlService.runScript(masterPool, sqlService.scriptNames.getSqlFilePath);
     const sqlFilePath = sqlFilePathResult.recordsets[0] && sqlFilePathResult.recordsets[0][0] ? sqlFilePathResult.recordsets[0][0].sqlFilePath : null;
 
-    let result = await sqlService.restoreDatabase(masterPool,{databaseName: options.databaseName, restoreFilePath: './sql/restore.bak', sqlFilePath});
+    let result = await sqlService.restoreDatabase(masterPool,{databaseName: databaseName, restoreFilePath: './sql/restore.bak', sqlFilePath});
 
-    console.log(`${options.databaseName} restored - DONE`);
+    console.log(`${databaseName} restored - DONE`);
     masterPool.close();
   }
   catch (err) {

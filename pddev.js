@@ -7,12 +7,14 @@ const args = require('args');
 args
   .option('databaseName', 'The database you want to act on')
   .command('migratedb', 'Migrate database using scripts in local sql folder', ['m'])
+  .command('migratedbdown', 'Migrate database down to version (must supply version number)', ['d'])
   .command('nukedb', 'Nuke database (drop, then create empty)', ['n'])
   .command('rebuilddb', 'Rebuild your database (drop, create, migrate)', ['r'])
   .command('restoredb', 'Restore database from bak file', ['s'])
   .command('test', 'Test cool new console stuffs', ['t']);
 
 global.options = args.parse(process.argv);
+
 
 // (async () => {
 //   global.sqlScripts = await sqlScripts.loadSqlScripts({ databaseName: flags.databaseName});

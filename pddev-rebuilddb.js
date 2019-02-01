@@ -9,10 +9,12 @@ const config = require('./config.json');
 args.option('databaseName', 'The database you want to act on');
 
 (async () => {
+  const postgratorConfig = await require('./postgratorConfig');
   const sqlService = new SqlService();
   const sqlMigrationService = new SqlMigrationService();
   // console.log(process.argv);
   const options = args.parse(process.argv);
+  const databaseName = options.databaseName ? options.databaseName : postgratorConfig.database;
 
   let masterPool = {};
   let dbPool = {};
@@ -31,14 +33,14 @@ args.option('databaseName', 'The database you want to act on');
     //   }
     // };
     const sqlDbConnectionOptions = {
-      connectionString: `Driver=SQL Server;Server=(local);Database=${options.databaseName};Trusted_Connection=true;`,
+      connectionString: `Driver=SQL Server;Server=(local);Database=${databaseName};Trusted_Connection=true;`,
     };
 
     masterPool = await new sql.ConnectionPool(sqlMasterConnectionOptions).connect();
     console.log('connected to master...');
 
     // nuke database
-    await sqlService.nukeDb(masterPool, sqlDbConnectionOptions, {databaseName: options.databaseName, username: config.username, password: config.password});
+    await sqlService.nukeDb(masterPool, sqlDbConnectionOptions, {databaseName: databaseName, username: config.username, password: config.password});
 
     console.log(`migrating sql in local sql folder...`);
     sqlMigrationService.migrateSql();

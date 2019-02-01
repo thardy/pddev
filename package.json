@@ -6,6 +6,7 @@
   "bin": {
     "pddev": "pddev.js",
     "pddev-migratedb": "pddev-migratedb.js",
+    "pddev-migratedbdown": "pddev-migratedbdown.js",
     "pddev-nukedb": "pddev-nukedb.js",
     "pddev-rebuilddb": "pddev-rebuilddb.js",
     "pddev-restoredb": "pddev-restoredb.js",

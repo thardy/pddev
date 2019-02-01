@@ -24,7 +24,8 @@ class SqlService {
       dropDatabase: 'dropDatabase',
       getSqlFilePath: 'getSqlFilePath',
       initSecurityForLocalUser: 'initSecurityForLocalUser',
-      restoreDatabase: 'restoreDatabase'
+      restoreDatabase: 'restoreDatabase',
+      migrateDown: 'migrateDown'
     };
   }
 
