@@ -36,7 +36,7 @@ args.option('databaseName', 'The database you want to act on');
     };
 
     masterPool = await new sql.ConnectionPool(sqlMasterConnectionOptions).connect();
-    masterPool.config.requestTimeout = 300000;
+    masterPool.config.requestTimeout = 600000; // 10 min
     console.log('connected to master...');
 
     // nuke database
